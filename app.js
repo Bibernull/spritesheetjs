@@ -1,7 +1,3 @@
-var requirejs = require('requirejs');
-var fs = require('fs');
-var _ = require('underscore');
-var async = require('async');
 var RectangleSheet = require('./rectangle_sheet.js');
 
 
