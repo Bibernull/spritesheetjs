@@ -4,6 +4,7 @@ var PNG = require('png-js');
 var _ = require('underscore');
 var async = require('async');
 var fs = require('fs');
+var mkdirp = require('mkdirp');
 
 var TwoDimensional = require('./two_dimensional');
 
@@ -79,6 +80,12 @@ function baseName(str) {
                         });
                         
                         css_str.push('}\n');
+
+                        var out_dir = self.sprite_path.substr(0, self.sprite_path.lastIndexOf('/'));
+                        
+                        if(!fs.existsSync(out_dir)){
+                            mkdirp.sync(out_dir);
+                        }
 
                         fs.writeFile(self.css_path, css_str.join(''), function (err) {
                             if (err) throw err;
