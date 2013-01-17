@@ -1,0 +1,27 @@
+#!/usr/bin/env node
+var Spritesheet = require('../rectangle_sheet.js');
+
+var program = require('commander');
+
+  program
+  .version('1.0.1')
+  .option('-d, --source_dir [value]', 'Image source directory')
+  .option('-r, --rel_sprite_path [value]', 'relative sprite path')
+  .option('-p, --sprite_path [value]', 'Output sprite path')
+  .option('-c, --css_path [value]', 'output css path')
+  .parse(process.argv);
+
+
+console.log(program.source_dir);
+console.log(program.rel_sprite_path);
+console.log(program.sprite_path);
+console.log(program.css_path);
+
+var sheet = new Spritesheet({
+    source_dir: program.source_dir || '.',
+    rel_sprite_path: program.rel_sprite_path || '.',
+    sprite_path: program.sprite_path || 'sprite.png',
+    css_path: program.css_path || 'sprite.css'
+});
+
+sheet.spritesheet();
