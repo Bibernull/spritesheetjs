@@ -333,13 +333,24 @@ function baseName(str) {
                         }
 
                         success_count++;
-                    }    
 
-                    fns.push(function(callback){ Push(v, function(err, res){ callback()})});         
+
+                        fns.push(function(callback){ Push(v, function(err, res){ callback()})}); 
+                    }
+        
                 });
 
-                this.width -= this.data.colWidth(this.data.colCount - 1);
-                png.width -= this.data.colWidth(this.data.colCount - 1); 
+                var last_col_occupied = false;
+                for(y = 0; y < this.data.rowCount; y++){
+                    if(this.data.item(this.data.colCount - 1, y)){
+                        last_col_occupied = true;
+                    }
+                }
+
+                if(!last_col_occupied){
+                    this.width -= this.data.colWidth(this.data.colCount - 1);
+                    png.width -= this.data.colWidth(this.data.colCount - 1); 
+                }
 
                 var sprite_path = this.sprite_path;
                 async.series(fns, function(err, res){
