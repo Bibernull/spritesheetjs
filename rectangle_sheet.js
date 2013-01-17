@@ -76,10 +76,9 @@ function baseName(str) {
                             css_str.push('\theight: ' + v.height + 'px;\n');
                             css_str.push('\tbackground-image: url(' + self.rel_sprite_path + self.sprite_name + ');\n');
                             css_str.push('\tbackground-position: ' + v.x + 'px ' + v.y + 'px;\n');
-
+                            css_str.push('}\n');
                         });
 
-                        css_str.push('}\n');
 
                         var out_dir = self.sprite_path.substr(0, self.sprite_path.lastIndexOf('/'));
                         
