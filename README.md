@@ -1,13 +1,15 @@
-node-spritesheet
+spritesheetjs
 ================
 
 A fast node spritesheet generator
 
+Install:
 
+    npm install spritesheetjs
 Use:
 
 
-    var RectangleSheet = require('./rectangle_sheet.js');
+    var RectangleSheet = require('spritesheetjs');
 
     var sheet = new RectangleSheet({
         source_dir: images_dir,

@@ -1,5 +1,5 @@
 {
-  "name": "node-spritesheet",
+  "name": "spritesheetjs",
   "description": "A fast node spritesheet generator",
   "version": "1.0.0",
   "homepage": "",
@@ -11,9 +11,9 @@
   "licenses": [
     {}
   ],
-  "main": "./app.js",
+  "main": "./rectangle_sheet.js",
   "bin": {
-    "app.js": "./app.js"
+    "rectangle_sheet.js": "./rectangle_sheet.js"
   },
   "dependencies": {
     "imagemagick": "~0.1.3",
