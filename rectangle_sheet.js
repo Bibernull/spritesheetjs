@@ -1,5 +1,4 @@
 
-var requirejs = require('requirejs');
 var pngjs = require('pngjs');
 var PNG = require('png-js');
 var _ = require('underscore');
