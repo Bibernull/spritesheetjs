@@ -75,7 +75,7 @@ function baseName(str) {
                             css_str.push('\twidth: ' + v.width + 'px;\n');
                             css_str.push('\theight: ' + v.height + 'px;\n');
                             css_str.push('\tbackground-image: url(' + self.rel_sprite_path + self.sprite_name + ');\n');
-                            css_str.push('\tbackground-position: ' + v.x + 'px ' + v.y + 'px;\n');
+                            css_str.push('\tbackground-position: -' + v.x + 'px -' + v.y + 'px;\n');
                             css_str.push('}\n');
                         });
 
