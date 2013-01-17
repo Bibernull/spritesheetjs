@@ -9,15 +9,15 @@ var mkdirp = require('mkdirp');
 var TwoDimensional = require('./two_dimensional');
 
 function baseName(str) {
-   var base = new String(str).substring(str.lastIndexOf('/') + 1); 
-    /*if(base.lastIndexOf(".") != -1)       
+   var base = new String(str).substring(str.lastIndexOf('/') + 1);
+    /*if(base.lastIndexOf(".") != -1)
        base = base.substring(0, base.lastIndexOf("."));*/
    return base;
-}   
+}
 
         var RectangleSheet =  function(options) {
                 this.source_dir = options.source_dir;
-                this.sprite_path = options.sprite_path;                
+                this.sprite_path = options.sprite_path;
                 this.rel_sprite_path = options.rel_sprite_path;
                 this.css_path = options.css_path;
                 this.sprite_name = baseName(options.sprite_path);
@@ -34,12 +34,12 @@ function baseName(str) {
 
                 console.log("Number of images " + files.length);
 
-                _.each(files, function(v, i){ 
-                    
+                _.each(files, function(v, i){
+
                     var image = PNG.load(source_dir + "/" + v);
 
                     images.push({image:v, width: image.width, height: image.height});
-                             
+
                 });
 
                 images.sort(function(a, b){
@@ -70,15 +70,15 @@ function baseName(str) {
                     self.css(self.rel_sprite_path, self.sprite_name, res, function(css){
                         var css_str = [];
                          _.each(css, function(v, i){
-                            
+
                             css_str.push('.' + v.name + ' { \n');
                             css_str.push('\twidth: ' + v.width + 'px;\n');
                             css_str.push('\theight: ' + v.height + 'px;\n');
                             css_str.push('\tbackground-image: url(' + self.rel_sprite_path + self.sprite_name + ');\n');
                             css_str.push('\tbackground-position: ' + v.x + 'px ' + v.y + 'px;\n');
-                            
+
                         });
-                        
+
                         css_str.push('}\n');
 
                         var out_dir = self.sprite_path.substr(0, self.sprite_path.lastIndexOf('/'));
@@ -90,7 +90,9 @@ function baseName(str) {
                         fs.writeFile(self.css_path, css_str.join(''), function (err) {
                             if (err) throw err;
                             console.log("Saved " + self.css_path);
-                            callback(css);
+                            if(callback) {
+                                callback(css);
+                            }
                         });
 
                     });
@@ -111,7 +113,7 @@ function baseName(str) {
 
                 // Check all cells that need to be unoccupied for there to be room for the rectangle.
                 //console.log("Occupied " + this.data.item(trialX, trialY).occupied + " at " + trialX + " " + trialY);
-                        
+
                 while (foundHeight < newRectSize.height)
                 {
                     trialX = coordinates.x;
@@ -153,7 +155,7 @@ function baseName(str) {
             RectangleSheet.prototype.addRectangle = function(newRectSize) {
                 rectangleXOffset = 0;
                 rectangleYOffset = 0;
-               
+
 
                 var requiredHeight = newRectSize.height;
                 var requiredWidth = newRectSize.width;
@@ -162,7 +164,7 @@ function baseName(str) {
                 var y = 0;
                 var offsetX = 0;
                 var offsetY = 0;
-                
+
                 var rowCount = this.data.rowCount;
 
                 while(true){
@@ -172,10 +174,10 @@ function baseName(str) {
                     var leftOverWidth = 0;
                     var leftOverHeight = 0;
 
-                    // First move upwards until we find an unoccupied cell. 
+                    // First move upwards until we find an unoccupied cell.
                     // If we're already at an unoccupied cell, no need to do anything.
-                    // Important to clear all occupied cells to get 
-                    // the lowest free height deficit. This must be taken from the top of the highest 
+                    // Important to clear all occupied cells to get
+                    // the lowest free height deficit. This must be taken from the top of the highest
                     // occupied cell.
 
                     while ((y < rowCount) && (this.data.item(x, y)))
@@ -188,7 +190,7 @@ function baseName(str) {
                     // If not, than y popped out of the top of the canvas.
 
                     if ((y < rowCount) && (this.freeHeightDeficit(this.height, offsetY, requiredHeight) <= 0)) {
-                        
+
                         var available = this.canAddRectangleAt({x:x, y:y}, {width: requiredWidth, height:requiredHeight});
                         //console.log(available);
                         if (available) {
@@ -236,9 +238,9 @@ function baseName(str) {
 
                 return {offsetX: offsetX,
                         offsetY: offsetY}
-                
 
-                
+
+
             };
 
             RectangleSheet.prototype.freeHeightDeficit = function(canvasHeight, offsetY, requiredHeight){
@@ -250,13 +252,13 @@ function baseName(str) {
 
             RectangleSheet.prototype.placeRectangle = function(coordinates, newRectSize, requiredHorisontalCount, requiredVerticalCount, leftOverWidth,leftOverHeight){
                 if (leftOverWidth > 0) {
-                  
+
                     var xFarRightColumn = coordinates.x + requiredHorisontalCount - 1;
                     this.data.insertColumn(xFarRightColumn, leftOverWidth);
                 }
 
                 if (leftOverHeight > 0) {
-                 
+
                     var yFarBottomColumn = coordinates.y + requiredVerticalCount - 1;
                     this.data.insertRow(yFarBottomColumn, leftOverHeight);
                 }
@@ -311,7 +313,7 @@ function baseName(str) {
                                     k++;
                                     png.data[k] = this.data[idx + 3];
                                     k++;
-                                 
+
                                 }
                             }
                         callback(null, true);
@@ -341,9 +343,9 @@ function baseName(str) {
                         success_count++;
 
 
-                        fns.push(function(callback){ Push(v, function(err, res){ callback()})}); 
+                        fns.push(function(callback){ Push(v, function(err, res){ callback()})});
                     }
-        
+
                 });
 
                 var last_col_occupied = false;
@@ -355,7 +357,7 @@ function baseName(str) {
 
                 if(!last_col_occupied){
                     this.width -= this.data.colWidth(this.data.colCount - 1);
-                    png.width -= this.data.colWidth(this.data.colCount - 1); 
+                    png.width -= this.data.colWidth(this.data.colCount - 1);
                 }
 
                 var sprite_path = this.sprite_path;
@@ -370,7 +372,7 @@ function baseName(str) {
             RectangleSheet.prototype.css = function(rel_sprite_path, sprite_name, images, callback){
 
                 var res = [];
-                
+
 
                 if(rel_sprite_path === 0){
                     rel_sprite_path = '';
@@ -395,13 +397,13 @@ function baseName(str) {
                     res.push('\tbackground-position: ' + v.x + 'px ' + v.y + 'px;\n');
                     */
 
-                    
+
                 });
-                
+
                 //res.push('}\n');
-                
+
                 callback(res);
-                
+
 
             };
 

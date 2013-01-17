@@ -1,12 +1,15 @@
 {
   "name": "spritesheetjs",
   "description": "A fast node spritesheet generator",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "homepage": "",
   "author": {
     "name": "Biber",
     "email": "biber.np@gmail.com",
     "url": ""
+  },
+  "bin": {
+    "spritesheetjs": "./bin/spritesheetjs"
   },
   "licenses": [
     {}
@@ -24,7 +27,8 @@
     "async": "~0.1.22",
     "underscore": "~1.4.3",
     "png-js": "~0.1.1",
-    "mkdirp": "~0.3.4"
+    "mkdirp": "~0.3.4",
+    "commander": "~1.1.1"
   },
   "engines": {
     "node": ">=0.4.0"
