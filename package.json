@@ -9,7 +9,7 @@
     "url": ""
   },
   "bin": {
-    "spritesheet": "./bin/spritesheet"
+    "spritesheetjs": "./bin/spritesheetjs"
   },
   "licenses": [
     {}
