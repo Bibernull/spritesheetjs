@@ -43,11 +43,23 @@ Use:
 ```js
 var RectangleSheet = require('spritesheetjs');
 
+// Using a directory as a source
 var sheet = new RectangleSheet({
-    source_dir: images_dir,
+    source_dir: "path/to/images",
     rel_sprite_path: "", // in case your css file and sprite image are in different directories
     sprite_path: 'out/sprite.png',
-    css_path: 'out/sprite.css'
+    css_path: 'out/sprite.css',
+    selector: '.sprite'
+});
+
+// OR an array of file paths
+
+var sheet = new RectangleSheet({
+    images: ['path/1.jpg', 'path/2.jpg'],
+    rel_sprite_path: "", // in case your css file and sprite image are in different directories
+    sprite_path: 'out/sprite.png',
+    css_path: 'out/sprite.css',
+    selector: '.sprite'
 });
 
 sheet.spritesheet(function(css){

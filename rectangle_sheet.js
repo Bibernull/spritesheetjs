@@ -16,17 +16,34 @@ function baseName(str) {
 }
 
         var RectangleSheet =  function(options) {
+                if(options.images && options.source_dir){
+                    throw "Pass the source dir OR the image paths array, not both.";
+                }
+
+                if(!options.selector){
+                    options.selector = "";
+                }
+
+                this.selector = options.selector;
                 this.source_dir = options.source_dir;
+                this.images = options.images;
                 this.sprite_path = options.sprite_path;
                 this.rel_sprite_path = options.rel_sprite_path;
                 this.css_path = options.css_path;
                 this.sprite_name = baseName(options.sprite_path);
-                this.readImagesMetadata(this.source_dir);
+                this.readImagesMetadata();
             };
 
-            RectangleSheet.prototype.readImagesMetadata = function(source_dir) {
+            RectangleSheet.prototype.readImagesMetadata = function() {
 
-                var files = fs.readdirSync(source_dir);
+                var files = "";
+                var self = this;
+                if(this.images){
+                    files = this.images;
+                }else{
+                    files = fs.readdirSync(this.source_dir);
+                }
+
                 var images = [];
                 files = _.filter(files, function(file){
                     return file.substr(-4) == '.png';
@@ -35,8 +52,10 @@ function baseName(str) {
                 console.log("Number of images " + files.length);
 
                 _.each(files, function(v, i){
+                    var dir = (self.source_dir) ? self.source_dir + "/" : "";
+                    
+                    var image = PNG.load(dir + v);
 
-                    var image = PNG.load(source_dir + "/" + v);
 
                     images.push({image:v, width: image.width, height: image.height});
 
@@ -71,7 +90,7 @@ function baseName(str) {
                         var css_str = [];
                          _.each(css, function(v, i){
 
-                            css_str.push('.' + v.name + ' { \n');
+                            css_str.push(self.selector + '.' + v.name + ' { \n');
                             css_str.push('\twidth: ' + v.width + 'px;\n');
                             css_str.push('\theight: ' + v.height + 'px;\n');
                             css_str.push('\tbackground-image: url(' + self.rel_sprite_path + self.sprite_name + ');\n');
@@ -286,7 +305,7 @@ function baseName(str) {
                 });
 
                 var Push = function(image ,callback){
-                    fs.createReadStream(source_path + '/' + image.image)
+                    fs.createReadStream(image.image)
                         .pipe(new pngjs.PNG({
                             filterType: 4
                         }))
@@ -341,6 +360,9 @@ function baseName(str) {
 
                         success_count++;
 
+                        if(self.source_dir){
+                            v.image = source_path + '/' + v.image;
+                        }
 
                         fns.push(function(callback){ Push(v, function(err, res){ callback()})});
                     }
@@ -379,7 +401,7 @@ function baseName(str) {
 
                 _.each(images, function(v, i){
                     var obj = {
-                        name: v.image.slice(0, -4),
+                        name: baseName(v.image.slice(0, -4)),
                         width: v.width,
                         height: v.height,
                         sprite_name: sprite_name,
