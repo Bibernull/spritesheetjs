@@ -1,7 +1,7 @@
 {
   "name": "spritesheetjs",
   "description": "A fast node spritesheet generator",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "homepage": "http://github.com/Bibernull/spritesheetjs",
   "author": {
     "name": "Biber",
@@ -14,7 +14,7 @@
   "licenses": [
     {}
   ],
-  "main": "./rectangle_sheet.js",
+  "main": "./spritesheet.js",
   "dependencies": {
     "ncp": "~0.2.6",
     "define": "~1.0.0",

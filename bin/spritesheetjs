@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var Spritesheet = require('../rectangle_sheet.js');
+var Spritesheet = require('../spritesheet.js');
 
 var program = require('commander');
 
